@@ -2,10 +2,17 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, create a `.env.local` file for Google Map API key
+First, copy `.env.sample` to create `.env.local` file for Google Map API key and Firebase API key
 
 ```.env
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=Your_API_Key
+
+FIREBASE_APIKEY=Your_API_Key
+FIREBASE_AUTH_DOMAIN=Your_API_Key
+FIREBASE_PROJECT_ID=Your_API_Key
+FIREBASE_STRAGE_BUCKET=Your_API_Key
+FIREBASE_MASSAGING_SENDER_ID=Your_API_Key
+FIREBASE_APP_ID=Your_API_Key
 ```
 
 Run the development server:

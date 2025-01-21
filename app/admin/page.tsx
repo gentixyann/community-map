@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import GoogleMap from "../../components/admin/AdminMap";
+import GoogleMap from "@/components/admin/AdminMap";
 import NameInput from "@/components/admin/NameInput";
+import AddressInput from "@/components/admin/AddressInput";
 
 export default function Home() {
   const [latLng, setLatLng] = useState({ lat: 35.6895, lng: 139.6917 }); // 初期値は東京
@@ -40,31 +41,16 @@ export default function Home() {
   }, [name]);
 
   return (
-    <main className="min-h-screen flex flex-col justify-center items-center p-4">
-      {/* 入力フォーム */}
-      <div className="my-8 p-5 w-full max-w-3xl shadow-md rounded-lg">
-        <label className="block mb-2 font-semibold" htmlFor="address-input">
-          住所を入力してね
-        </label>
-        <input
-          id="address-input"
-          type="text"
-          className="border w-full px-3 py-2 rounded"
-          placeholder="例: 東京都千代田区"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <button
-          className="mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 w-full"
-          onClick={geocodeAddress}
-        >
-          Set Pin
-        </button>
-        {error && <p className="text-red-500 mt-3">{error}</p>}
-      </div>
+    <main className="min-h-screen  flex flex-col justify-center items-center p-4">
+      {/* 住所入力 */}
+      <AddressInput
+        setAddress={setAddress}
+        geocodeAddress={geocodeAddress}
+        error={error}
+      />
 
       {/* Googleマップ */}
-      <div className="w-full" style={{ maxWidth: "1000px" }}>
+      <div className="w-full max-w-screen-lg">
         <div className="shadow-lg rounded-lg overflow-hidden">
           <GoogleMap
             apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}

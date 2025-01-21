@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import GoogleMap from "@/components/admin/AdminMap";
 import NameInput from "@/components/admin/NameInput";
 import AddressInput from "@/components/admin/AddressInput";
+import { saveCommunity } from "@/firebase/admin/firestore";
 
 export default function Home() {
   const [latLng, setLatLng] = useState({ lat: 35.6895, lng: 139.6917 }); // 初期値は東京
@@ -30,6 +31,22 @@ export default function Home() {
       }
     } catch {
       setError("Geocodingリクエスト中にエラーが発生しました。");
+    }
+  };
+
+  // データを Firestore に保存
+  const handleSave = async () => {
+    try {
+      if (!name || !address) {
+        setError("名前と住所を入力してください。");
+        return;
+      }
+
+      await saveCommunity({ name, lat: latLng.lat, lng: latLng.lng });
+      alert("データが保存されました！");
+    } catch (error) {
+      console.error(error);
+      setError("データの保存に失敗しました。");
     }
   };
 
@@ -61,8 +78,17 @@ export default function Home() {
           />
         </div>
       </div>
-
       <NameInput name={setName} />
+
+      {/* 保存ボタン */}
+      <button
+        className="mt-6 px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600"
+        onClick={handleSave}
+      >
+        保存する
+      </button>
+
+      {error && <p className="text-red-500 mt-3">{error}</p>}
     </main>
   );
 }

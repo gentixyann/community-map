@@ -15,6 +15,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
-console.log("FIREBASE_APIKEY:", process.env.NEXT_PUBLIC_FIREBASE_APIKEY);
 
 export default db;

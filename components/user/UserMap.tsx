@@ -1,44 +1,36 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { CommunityData } from "../../firebase/user/firestore";
+import Modal from "./Modal";
 
-type GoogleMapProps = {
+type UserMapProps = {
   apiKey: string;
-  lat: number; // 緯度
-  lng: number; // 経度
-  zoom: number; // ズームレベル
+  communities: CommunityData[];
 };
 
-export default function GoogleMap({ apiKey, lat, lng, zoom }: GoogleMapProps) {
+export default function UserMap({ apiKey, communities }: UserMapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [marker, setMarker] = useState<google.maps.Marker | null>(null);
-  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
+  const [selectedCommunity, setSelectedCommunity] = useState<string | null>(
     null
-  ); // 緯度経度state
+  ); // 選択されたマーカーの名前
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
-    // Google Maps API を読み込み後にマップを初期化
+    // Google Maps API をロードしてマップを初期化
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
     script.async = true;
+
     script.onload = () => {
       const initializedMap = new google.maps.Map(mapContainerRef.current!, {
-        center: { lat, lng },
-        zoom,
+        center: { lat: 35.6895, lng: 139.6917 }, // 東京を初期位置に設定
+        zoom: 12,
       });
-
-      // 初期位置のピンを作成
-      const initialMarker = new google.maps.Marker({
-        position: { lat, lng },
-        map: initializedMap,
-      });
-
-      // マップとマーカーを state に保存
       setMap(initializedMap);
-      setMarker(initialMarker);
     };
 
     document.head.appendChild(script);
@@ -46,11 +38,37 @@ export default function GoogleMap({ apiKey, lat, lng, zoom }: GoogleMapProps) {
     return () => {
       script.remove(); // クリーンアップ
     };
-  }, [apiKey, lat, lng, zoom]);
+  }, [apiKey]);
+
+  useEffect(() => {
+    if (!map || communities.length === 0) return;
+
+    // 各コミュニティに対応するマーカーを作成
+    communities.forEach(({ lat, lng, name }) => {
+      const marker = new google.maps.Marker({
+        position: { lat, lng },
+        map,
+        title: name, // ツールチップに名前を表示
+      });
+      // マーカーがクリックされたときの処理
+      marker.addListener("click", () => {
+        setSelectedCommunity(name); // 選択したコミュニティの名前を設定
+        setIsModalOpen(true); // モーダルを開く
+      });
+    });
+  }, [map, communities]);
 
   return (
-    <div className="w-screen h-screen m-0 p-0">
-      <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
-    </div>
+    <>
+      <div className="w-screen h-screen m-0 p-0">
+        <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
+      </div>
+      {/* モーダルを表示 */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)} // モーダルを閉じる
+        content={selectedCommunity || ""} // モーダルに表示する内容
+      />
+    </>
   );
 }

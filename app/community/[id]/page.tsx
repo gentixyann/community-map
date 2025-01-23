@@ -1,8 +1,5 @@
 import BackButton from "@/components/user/BackButton";
-import {
-  fetchCommunityData,
-  CommunityData,
-} from "../../../firebase/user/firestore";
+import { fetchCommunityData } from "../../../firebase/user/firestore";
 
 type CommunityPageProps = {
   params: { id: string };

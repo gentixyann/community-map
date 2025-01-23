@@ -2,8 +2,6 @@ import BackButton from "@/components/user/BackButton";
 import { fetchCommunityData } from "../../../firebase/user/firestore";
 
 type CommunityPageProps = {
-  children: React.ReactNode;
-
   params: Promise<{ id: string }>;
 };
 

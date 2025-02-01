@@ -5,11 +5,13 @@ import GoogleMap from "@/components/admin/AdminMap";
 import NameInput from "@/components/admin/NameInput";
 import AddressInput from "@/components/admin/AddressInput";
 import { saveCommunity } from "@/firebase/admin/firestore";
+import OverviewInput from "@/components/admin/OverviewInput";
 
 export default function Home() {
   const [latLng, setLatLng] = useState({ lat: 35.6895, lng: 139.6917 }); // 初期値は東京
   const [address, setAddress] = useState(""); // 入力された住所
   const [name, setName] = useState(""); // 入力された名前
+  const [overview, setOverview] = useState(""); // 入力された概要
   const [error, setError] = useState<string | null>(null); // エラー管理
 
   // Geocoding API を使って住所から緯度経度を取得する関数
@@ -37,12 +39,12 @@ export default function Home() {
   // データを Firestore に保存
   const handleSave = async () => {
     try {
-      if (!name || !address) {
+      if (!name || !address || !overview) {
         setError("名前と住所を入力してください。");
         return;
       }
 
-      await saveCommunity({ name, lat: latLng.lat, lng: latLng.lng });
+      await saveCommunity({ name, overview, lat: latLng.lat, lng: latLng.lng });
       alert("データが保存されました！");
     } catch (error) {
       console.error(error);
@@ -79,6 +81,7 @@ export default function Home() {
         </div>
       </div>
       <NameInput name={setName} />
+      <OverviewInput overview={setOverview} />
 
       {/* 保存ボタン */}
       <button

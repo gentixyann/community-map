@@ -4,6 +4,7 @@ import db from "../firebase";
 // 保存するデータ型を定義
 type CommunityData = {
   name: string;
+  overview: string;
   lat: number;
   lng: number;
 };

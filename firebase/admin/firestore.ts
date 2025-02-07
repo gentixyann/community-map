@@ -1,4 +1,10 @@
-import { doc, setDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import db from "../firebase";
 
 // 保存するデータ型を定義
@@ -16,5 +22,19 @@ export const saveCommunity = async (data: CommunityData) => {
   await setDoc(docRef, {
     ...data,
     createdAt: serverTimestamp(),
+  });
+};
+
+// ドキュメント更新用のメソッド
+export const updateCommunity = async (
+  id: string,
+  data: Partial<CommunityData>
+) => {
+  // 指定した id のドキュメント参照を取得
+  const docRef = doc(db, "community", id);
+  // 更新するフィールドとサーバー側の更新日時をセット
+  await updateDoc(docRef, {
+    ...data,
+    updatedAt: serverTimestamp(),
   });
 };

@@ -34,7 +34,6 @@ export default function GoogleMap({
         zoom,
         gestureHandling,
       });
-
       setMap(initializedMap);
     };
 
@@ -45,7 +44,7 @@ export default function GoogleMap({
         script.parentNode.removeChild(script);
       }
     };
-  }, [apiKey, gestureHandling, zoom]);
+  }, [apiKey, gestureHandling, zoom]); // ここは OK
 
   useEffect(() => {
     if (!map) return;
@@ -65,7 +64,7 @@ export default function GoogleMap({
   }, [lat, lng, map]);
 
   return (
-    <div className=" h-screen m-0 p-0">
+    <div className="h-screen m-0 p-0">
       <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
     </div>
   );

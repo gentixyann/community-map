@@ -6,15 +6,17 @@ import EditCommunityForm from "@/components/admin/community_list/EditCommunityFo
 import BackButton from "@/components/admin/community_list/BackButton";
 
 type CommunityPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default async function CommunityDetailPage({
   params,
 }: CommunityPageProps) {
+  const { id } = await params;
+
   // Firestore から全コミュニティデータを取得し、該当するドキュメント ID のものを検索
   const communities = await fetchCommunityData();
-  const community = communities.find((c) => c.id === params.id);
+  const community = communities.find((c) => c.id === id);
 
   if (!community) {
     return <p>コミュニティが見つかりませんでした。</p>;

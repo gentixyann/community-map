@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import GoogleMap from "@/components/admin/AdminMap";
-import NameInput from "@/components/admin/NameInput";
-import AddressInput from "@/components/admin/AddressInput";
+import GoogleMap from "@/components/admin/register/AdminMap";
+import NameInput from "@/components/admin/register/NameInput";
+import AddressInput from "@/components/admin/register/AddressInput";
 import { saveCommunity } from "@/firebase/admin/firestore";
-import OverviewInput from "@/components/admin/OverviewInput";
+import OverviewInput from "@/components/admin/register/OverviewInput";
 
 export default function Home() {
   const [latLng, setLatLng] = useState({ lat: 35.6895, lng: 139.6917 }); // 初期値は東京

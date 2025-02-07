@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import UserMap from "../components/user/UserMap";
-import { fetchCommunityData, CommunityData } from "../firebase/user/firestore";
+import { fetchCommunityData } from "../firebase/user/firestore";
+import { CommunityData } from "@/model/CommunityModel";
 
 export default function Home() {
   const [communities, setCommunities] = useState<CommunityData[]>([]);

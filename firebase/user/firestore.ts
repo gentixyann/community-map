@@ -1,16 +1,6 @@
 import { getDocs, collection } from "firebase/firestore";
-import db from "../firebase";
-
-// 保存されたコミュニティデータの型定義（Timestamp フィールドはプレーンな値に変換済み）
-export type CommunityData = {
-  id: string;
-  name: string;
-  overview: string;
-  lat: number;
-  lng: number;
-  createdAt?: number; // ミリ秒に変換
-  updatedAt?: number; // ミリ秒に変換
-};
+import { db } from "../firebase";
+import { CommunityData } from "@/model/CommunityModel";
 
 // コミュニティーデータを取得する関数
 export const fetchCommunityData = async (): Promise<CommunityData[]> => {

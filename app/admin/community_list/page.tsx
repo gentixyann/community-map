@@ -1,7 +1,7 @@
 // app/admin/community_list/page.tsx
 // ※このファイルはサーバーコンポーネントとして実装します（"use client" は不要）
 
-import { fetchCommunityData } from "../../../firebase/user/firestore";
+import { fetchCommunityData } from "@/firebase/user/firestore";
 import CommunityList from "@/components/admin/community_list/CommunityList";
 
 // サーバーコンポーネントなので、async 関数として Firestore からデータ取得可能

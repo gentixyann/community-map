@@ -1,12 +1,13 @@
-// components/admin/community_list/EditCommunityForm.tsx
 "use client";
 
 import { useState } from "react";
-import { CommunityData } from "@/firebase/user/firestore";
+import { CommunityData } from "@/model/CommunityModel";
 import { updateCommunity } from "@/firebase/admin/firestore";
+import NameInput from "@/components/admin/form/NameInput";
+import OverviewInput from "@/components/admin/form/OverviewInput";
 
 type EditCommunityFormProps = {
-  // 初期値として対象コミュニティのデータを受け取る
+  // 初期値として対象コミュニティのデータを受け取る（id を含む）
   initialCommunity: CommunityData & { id: string };
 };
 
@@ -37,30 +38,10 @@ export default function EditCommunityForm({
 
   return (
     <div className="w-full max-w-lg p-4 border rounded shadow-md">
-      <div className="mb-4">
-        <label className="block text-sm font-semibold mb-1" htmlFor="name">
-          名前
-        </label>
-        <input
-          id="name"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-semibold mb-1" htmlFor="overview">
-          概要
-        </label>
-        <textarea
-          id="overview"
-          value={overview}
-          onChange={(e) => setOverview(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
-          maxLength={500}
-        />
-      </div>
+      {/* NameInput と OverviewInput を利用してコンポーネント分割 */}
+      <NameInput name={name} setName={setName} />
+      <OverviewInput overview={overview} setOverview={setOverview} />
+
       {error && <p className="text-red-500 mb-2">{error}</p>}
       <button
         onClick={handleUpdate}

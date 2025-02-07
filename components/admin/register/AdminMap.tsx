@@ -19,8 +19,13 @@ export default function GoogleMap({
 }: GoogleMapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [marker, setMarker] = useState<google.maps.Marker | null>(null);
+  const markerRef = useRef<google.maps.Marker | null>(null);
 
+  // 初期の lat, lng を ref に保持（初回の center 設定用）
+  const initialLatRef = useRef(lat);
+  const initialLngRef = useRef(lng);
+
+  // Google Maps API を読み込み、map を初期化する effect
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
@@ -29,8 +34,9 @@ export default function GoogleMap({
     script.async = true;
 
     script.onload = () => {
+      // 初期の中心は初期値として保持した ref の値を利用
       const initializedMap = new google.maps.Map(mapContainerRef.current!, {
-        center: { lat, lng },
+        center: { lat: initialLatRef.current, lng: initialLngRef.current },
         zoom,
         gestureHandling,
       });
@@ -44,22 +50,24 @@ export default function GoogleMap({
         script.parentNode.removeChild(script);
       }
     };
-  }, [apiKey, gestureHandling, zoom]); // ここは OK
+  }, [apiKey, gestureHandling, zoom]); // lat, lng は初回のみ利用するため依存配列に含めません
 
+  // lat, lng が変わったときに、マーカーを更新し、map の中心を変更する effect
   useEffect(() => {
     if (!map) return;
 
-    // マーカー更新と地図の中心移動
-    if (marker) {
-      marker.setMap(null);
+    // 既存のマーカーがあれば削除
+    if (markerRef.current) {
+      markerRef.current.setMap(null);
     }
 
-    const newMarker = new google.maps.Marker({
+    // 新しいマーカーを作成し、markerRef に保存
+    markerRef.current = new google.maps.Marker({
       position: { lat, lng },
       map,
     });
 
-    setMarker(newMarker);
+    // map の中心を更新
     map.setCenter({ lat, lng });
   }, [lat, lng, map]);
 

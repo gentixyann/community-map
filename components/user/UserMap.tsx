@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CommunityData } from "../../firebase/user/firestore";
+import { CommunityData } from "@/model/CommunityModel";
 import Modal from "./Modal";
 
 type UserMapProps = {

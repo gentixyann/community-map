@@ -1,20 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import GoogleMap from "@/components/admin/register/AdminMap";
-import NameInput from "@/components/admin/register/NameInput";
+import NameInput from "@/components/admin/form/NameInput";
 import AddressInput from "@/components/admin/register/AddressInput";
 import { saveCommunity } from "@/firebase/admin/firestore";
-import OverviewInput from "@/components/admin/register/OverviewInput";
+import OverviewInput from "@/components/admin/form/OverviewInput";
+import FileUploader from "@/components/admin/form/FileUploader";
 
 export default function Home() {
-  const [latLng, setLatLng] = useState({ lat: 35.6895, lng: 139.6917 }); // 初期値は東京
-  const [address, setAddress] = useState(""); // 入力された住所
-  const [name, setName] = useState(""); // 入力された名前
-  const [overview, setOverview] = useState(""); // 入力された概要
-  const [error, setError] = useState<string | null>(null); // エラー管理
+  const [latLng, setLatLng] = useState({ lat: 35.6895, lng: 139.6917 });
+  const [address, setAddress] = useState("");
+  const [name, setName] = useState("");
+  const [overview, setOverview] = useState("");
+  const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  // Geocoding API を使って住所から緯度経度を取得する関数
   const geocodeAddress = async () => {
     try {
       const response = await fetch(
@@ -26,8 +27,8 @@ export default function Home() {
 
       if (data.status === "OK") {
         const location = data.results[0].geometry.location;
-        setLatLng({ lat: location.lat, lng: location.lng }); // 緯度経度を更新
-        setError(null); // エラーをクリア
+        setLatLng({ lat: location.lat, lng: location.lng });
+        setError(null);
       } else {
         setError("住所の取得に失敗しました。");
       }
@@ -36,7 +37,7 @@ export default function Home() {
     }
   };
 
-  // データを Firestore に保存
+  // handleSave で uploadedUrl を含めたデータを保存
   const handleSave = async () => {
     try {
       if (!name || !address || !overview) {
@@ -44,7 +45,13 @@ export default function Home() {
         return;
       }
 
-      await saveCommunity({ name, overview, lat: latLng.lat, lng: latLng.lng });
+      await saveCommunity({
+        name,
+        overview,
+        lat: latLng.lat,
+        lng: latLng.lng,
+        image: uploadedUrl || "", // uploadedUrl があれば保存、なければ空文字
+      });
       alert("データが保存されました！");
     } catch (error) {
       console.error(error);
@@ -52,23 +59,13 @@ export default function Home() {
     }
   };
 
-  // nameが更新されるたびにログ出力
-  useEffect(() => {
-    if (name) {
-      console.log(`Name updated: ${name}`);
-    }
-  }, [name]);
-
   return (
-    <main className="min-h-screen  flex flex-col justify-center items-center p-4">
-      {/* 住所入力 */}
+    <main className="min-h-screen flex flex-col justify-center items-center p-4">
       <AddressInput
         setAddress={setAddress}
         geocodeAddress={geocodeAddress}
         error={error}
       />
-
-      {/* Googleマップ */}
       <div className="w-full max-w-screen-lg">
         <div className="shadow-lg rounded-lg overflow-hidden">
           <GoogleMap
@@ -80,17 +77,22 @@ export default function Home() {
           />
         </div>
       </div>
-      <NameInput name={setName} />
-      <OverviewInput overview={setOverview} />
-
-      {/* 保存ボタン */}
+      <NameInput name={name} setName={setName} />
+      <OverviewInput overview={overview} setOverview={setOverview} />
+      {/* FileUploader に onUpload コールバックを渡す */}
+      <FileUploader
+        communityId=""
+        onUpload={(url) => {
+          setUploadedUrl(url);
+          console.log("Uploaded URL:", url);
+        }}
+      />
       <button
         className="mt-6 px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600"
         onClick={handleSave}
       >
         保存する
       </button>
-
       {error && <p className="text-red-500 mt-3">{error}</p>}
     </main>
   );

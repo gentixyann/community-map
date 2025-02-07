@@ -2,7 +2,7 @@
 "use client"; // クライアントコンポーネントとして実装（リンク操作などのクライアント側機能利用のため）
 
 import Link from "next/link";
-import { CommunityData } from "@/firebase/user/firestore";
+import { CommunityData } from "@/model/CommunityModel";
 
 // Props の型定義
 type CommunityListProps = {

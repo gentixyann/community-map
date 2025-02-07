@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,7 +14,11 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// Initialize Cloud Firestore and get a reference to the service
+// Firestore の初期化
 const db = getFirestore(app);
 
-export default db;
+// Storage の初期化
+const storage = getStorage(app);
+
+// db と storage を named export としてエクスポート
+export { db, storage };

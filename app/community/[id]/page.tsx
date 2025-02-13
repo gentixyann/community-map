@@ -1,7 +1,6 @@
 import BackButton from "@/components/user/BackButton";
 import Image from "next/image";
 import { fetchCommunityData } from "@/firebase/user/firestore";
-import { CommunityData } from "@/model/CommunityModel";
 
 type CommunityPageProps = {
   params: Promise<{ id: string }>;

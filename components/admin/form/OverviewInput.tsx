@@ -29,7 +29,7 @@ const OverviewInput = ({ overview, setOverview }: OverviewInputProps) => {
       <textarea
         id="overview"
         maxLength={140}
-        className="border w-full px-3 py-2 rounded resize-none"
+        className="border w-full px-3 py-2 rounded resize-none textArea"
         placeholder="新宿より徒歩104分の好立地な場所にてアーバンジャングルな複合施設が爆誕。..."
         onChange={handleChange}
         value={text}

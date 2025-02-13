@@ -45,7 +45,7 @@ export default async function CommunityPage({ params }: CommunityPageProps) {
       </div>
 
       {/* コミュニティ概要 */}
-      <div className="w-full max-w-md mb-4 p-4">
+      <div className="w-full max-w-md mb-4">
         <p className="text-sm">{community.overview}</p>
       </div>
 

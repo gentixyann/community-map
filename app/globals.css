@@ -19,3 +19,9 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.textArea {
+  field-sizing: content;
+  min-width: 150px;
+  min-height: min-content;
+}

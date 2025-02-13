@@ -1,18 +1,18 @@
 import BackButton from "@/components/user/BackButton";
-import { fetchCommunityData } from "../../../firebase/user/firestore";
+import Image from "next/image";
+import { fetchCommunityData } from "@/firebase/user/firestore";
+import { CommunityData } from "@/model/CommunityModel";
 
 type CommunityPageProps = {
-  params: Promise<{ id: string }>; // params は Promise で解決される
+  params: Promise<{ id: string }>;
 };
 
 export default async function CommunityPage({ params }: CommunityPageProps) {
-  // params を事前に await で解決
+  // params を事前に解決してドキュメント ID を取得
   const { id } = await params;
 
-  // ドキュメント ID で Firestore データを取得
+  // Firestore から全コミュニティデータを取得し、該当するドキュメントを検索
   const communities = await fetchCommunityData();
-
-  // 非同期処理なしで一致するデータを同期的に検索
   const community = communities.find((c) => c.id === id);
 
   if (!community) {
@@ -20,12 +20,37 @@ export default async function CommunityPage({ params }: CommunityPageProps) {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-bold">{community.name}</h1>
-      <p className="mt-4">
-        緯度: {community.lat}, 経度: {community.lng}
-      </p>
-      {/* ルート画面に戻るボタン */}
+    <main className="min-h-screen flex flex-col items-center justify-center p-4">
+      {/* コミュニティ名 */}
+      <h1 className="text-3xl font-bold mb-4">{community.name}</h1>
+
+      {/* 画像表示エリア */}
+      <div className="w-full max-w-md relative h-64 mb-4">
+        {community.image ? (
+          <Image
+            src={community.image}
+            alt={community.name}
+            layout="fill"
+            objectFit="cover"
+            className="rounded"
+          />
+        ) : (
+          <Image
+            src="/images/no_image.svg"
+            alt="No Image"
+            layout="fill"
+            objectFit="cover"
+            className="object-cover"
+          />
+        )}
+      </div>
+
+      {/* コミュニティ概要 */}
+      <div className="w-full max-w-md mb-4 p-4">
+        <p className="text-sm">{community.overview}</p>
+      </div>
+
+      {/* 戻るボタン */}
       <BackButton />
     </main>
   );

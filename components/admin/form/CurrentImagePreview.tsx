@@ -24,7 +24,7 @@ export default function CurrentImagePreview({
   return (
     <div className="mb-4">
       <p className="mb-2 font-semibold">現在登録されている画像</p>
-      <div className="relative w-64 h-64 border rounded overflow-hidden">
+      <div className="relative w-full h-64 border rounded overflow-hidden">
         <Image
           src={imageUrl}
           alt="Current Image"

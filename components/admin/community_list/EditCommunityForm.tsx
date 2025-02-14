@@ -7,6 +7,8 @@ import NameInput from "@/components/admin/form/NameInput";
 import OverviewInput from "@/components/admin/form/OverviewInput";
 import FileUploader from "@/components/admin/form/FileUploader";
 import CurrentImagePreview from "@/components/admin/form/CurrentImagePreview";
+import SnsInput from "@/components/admin/form/SnsInput";
+import { SnsLinks } from "@/model/SnsLinksModel";
 
 type EditCommunityFormProps = {
   // 初期値として対象コミュニティのデータを受け取る（id を含む）
@@ -23,6 +25,9 @@ export default function EditCommunityForm({
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(
     initialCommunity.image || null
   );
+  const [snsLinks, setSnsLinks] = useState<SnsLinks>(
+    initialCommunity.snsLinks || {}
+  );
   // エラーメッセージおよびローディング状態
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -33,7 +38,7 @@ export default function EditCommunityForm({
     setError(null);
     try {
       // updateCommunity を呼び出し、対象ドキュメントを更新
-      const updateData: Partial<CommunityData> = { name, overview };
+      const updateData: Partial<CommunityData> = { name, overview, snsLinks };
       if (uploadedUrl) {
         updateData.image = uploadedUrl;
       }
@@ -47,10 +52,11 @@ export default function EditCommunityForm({
   };
 
   return (
-    <div className="w-full max-w-lg p-4 border rounded shadow-md">
+    <div className="w-full max-w-lg p-4">
       {/* NameInput と OverviewInput を利用してコンポーネント分割 */}
       <NameInput name={name} setName={setName} />
       <OverviewInput overview={overview} setOverview={setOverview} />
+      <SnsInput snsLinks={snsLinks} setSnsLinks={setSnsLinks} />
       {/* 現在登録されている画像のプレビュー表示 */}
       <CurrentImagePreview imageUrl={uploadedUrl} />
       {/* FileUploader を追加して画像アップロード機能を提供 */}

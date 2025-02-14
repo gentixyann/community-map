@@ -10,6 +10,7 @@ import {
 import { db, storage } from "@/firebase/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { CommunityData } from "@/model/CommunityModel";
+import { SnsLinks } from "@/model/SnsLinksModel";
 
 // 保存するデータ型を定義
 type RegisterCommunityData = {
@@ -18,6 +19,7 @@ type RegisterCommunityData = {
   lat: number;
   lng: number;
   image: string;
+  snsLinks: SnsLinks;
 };
 
 // Firestore にデータを保存する関数

@@ -7,12 +7,15 @@ import AddressInput from "@/components/admin/register/AddressInput";
 import { saveCommunity } from "@/firebase/admin/firestore";
 import OverviewInput from "@/components/admin/form/OverviewInput";
 import FileUploader from "@/components/admin/form/FileUploader";
+import SnsInput from "@/components/admin/form/SnsInput";
+import { SnsLinks } from "@/model/SnsLinksModel";
 
 export default function Home() {
   const [latLng, setLatLng] = useState({ lat: 35.6895, lng: 139.6917 });
   const [address, setAddress] = useState("");
   const [name, setName] = useState("");
   const [overview, setOverview] = useState("");
+  const [snsLinks, setSnsLinks] = useState<SnsLinks>({});
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,7 +53,8 @@ export default function Home() {
         overview,
         lat: latLng.lat,
         lng: latLng.lng,
-        image: uploadedUrl || "", // uploadedUrl があれば保存、なければ空文字
+        image: uploadedUrl || "",
+        snsLinks,
       });
       alert("データが保存されました！");
     } catch (error) {
@@ -79,6 +83,7 @@ export default function Home() {
       </div>
       <NameInput name={name} setName={setName} />
       <OverviewInput overview={overview} setOverview={setOverview} />
+      <SnsInput snsLinks={snsLinks} setSnsLinks={setSnsLinks} />
       {/* FileUploader に onUpload コールバックを渡す */}
       <FileUploader
         communityId=""

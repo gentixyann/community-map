@@ -26,6 +26,21 @@ export default function SnsInput({ snsLinks, setSnsLinks }: SnsInputProps) {
   return (
     <div className="my-8 p-5 w-full max-w-3xl shadow-md rounded-lg">
       <h2 className="text-xl font-bold mb-4">SNSリンク</h2>
+      {/* X (旧Twitter) */}
+      <div className="mb-4">
+        <label htmlFor="x" className="block text-sm font-semibold mb-1">
+          X (旧Twitter)
+        </label>
+        <input
+          type="text"
+          id="x"
+          name="x"
+          value={snsLinks.x || ""}
+          onChange={handleChange}
+          placeholder="XのURLを入力"
+          className="w-full border px-3 py-2 rounded"
+        />
+      </div>
       {/* Instagram */}
       <div className="mb-4">
         <label htmlFor="instagram" className="block text-sm font-semibold mb-1">
@@ -53,21 +68,6 @@ export default function SnsInput({ snsLinks, setSnsLinks }: SnsInputProps) {
           value={snsLinks.note || ""}
           onChange={handleChange}
           placeholder="NoteのURLを入力"
-          className="w-full border px-3 py-2 rounded"
-        />
-      </div>
-      {/* X (旧Twitter) */}
-      <div className="mb-4">
-        <label htmlFor="x" className="block text-sm font-semibold mb-1">
-          X (旧Twitter)
-        </label>
-        <input
-          type="text"
-          id="x"
-          name="x"
-          value={snsLinks.x || ""}
-          onChange={handleChange}
-          placeholder="XのURLを入力"
           className="w-full border px-3 py-2 rounded"
         />
       </div>

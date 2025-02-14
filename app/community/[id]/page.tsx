@@ -1,6 +1,7 @@
 import BackButton from "@/components/user/BackButton";
 import Image from "next/image";
 import { fetchCommunityData } from "@/firebase/user/firestore";
+import SnsLinksComponent from "@/components/user/SnsLinks";
 
 type CommunityPageProps = {
   params: Promise<{ id: string }>;
@@ -47,6 +48,11 @@ export default async function CommunityPage({ params }: CommunityPageProps) {
       {/* コミュニティ概要 */}
       <div className="w-full max-w-md mb-4">
         <p className="text-sm">{community.overview}</p>
+      </div>
+
+      {/* SNSリンク */}
+      <div className="w-full max-w-md mb-4">
+        <SnsLinksComponent snsLinks={community.snsLinks} />
       </div>
 
       {/* 戻るボタン */}

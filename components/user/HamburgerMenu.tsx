@@ -48,10 +48,10 @@ export default function HamburgerMenu() {
               "opacity 235ms cubic-bezier(0.4, 0, 0.2, 1), transform 157ms cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
-          <Link href="/admin" className="block py-2 hover:underline">
+          <Link href="/about_us" className="block py-2 hover:underline">
             運営について
           </Link>
-          <Link href="/admin/register" className="block py-2 hover:underline">
+          <Link href="/how_to_register" className="block py-2 hover:underline">
             コミュニティ登録するには？
           </Link>
         </div>

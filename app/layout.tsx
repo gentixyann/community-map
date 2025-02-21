@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Header from "@/components/user/Header";
+import Footer from "@/components/user/Footer";
 
 export const metadata: Metadata = {
   title: "コミュマップ",
@@ -8,12 +10,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body className="relative">
+        {/* 固定ヘッダー */}
+        <Header />
+        {/* 中央のコンテンツ領域。 */}
+        <main>{children}</main>
+        {/* 固定フッター */}
+        <Footer />
+      </body>
     </html>
   );
 }

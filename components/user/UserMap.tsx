@@ -28,6 +28,9 @@ export default function UserMap({ apiKey, communities }: UserMapProps) {
       const initializedMap = new google.maps.Map(mapContainerRef.current!, {
         center: { lat: 35.6895, lng: 139.6917 },
         zoom: 12,
+        mapTypeControl: false,
+        fullscreenControl: false,
+        streetViewControl: false,
       });
       setMap(initializedMap);
     };
@@ -58,8 +61,11 @@ export default function UserMap({ apiKey, communities }: UserMapProps) {
 
   return (
     <>
-      <div className="w-screen h-screen m-0 p-0">
-        <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
+      <div className="w-screen m-0 p-0">
+        <div
+          ref={mapContainerRef}
+          style={{ width: "100%", minHeight: "calc(100dvh - 84px)" }}
+        />
       </div>
       {/* モーダル表示 */}
       <Modal

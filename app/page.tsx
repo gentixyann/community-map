@@ -19,7 +19,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
+    <main className="flex flex-col items-center justify-center">
       {/* Firestore データを UserMap に渡す */}
       <UserMap
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}

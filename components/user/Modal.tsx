@@ -51,7 +51,7 @@ export default function Modal({ isOpen, onClose, content }: ModalProps) {
           <p className="text-lg font-semibold">{content.name}</p>
           <button
             onClick={() => router.push(`/community/${content.id}`)}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="mt-4 bg-black text-white px-4 py-2 rounded-full hover:bg-[#b3b3b3]"
           >
             詳しく見る
           </button>

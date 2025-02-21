@@ -25,7 +25,7 @@ export default async function CommunityPage({ params }: CommunityPageProps) {
       <h1 className="text-3xl font-bold mb-4">{community.name}</h1>
 
       {/* 画像表示エリア */}
-      <div className="w-full max-w-md relative h-64 mb-4">
+      <div className="w-full max-w-md relative h-64 mb-8">
         {community.image ? (
           <Image
             src={community.image}
@@ -46,7 +46,8 @@ export default async function CommunityPage({ params }: CommunityPageProps) {
       </div>
 
       {/* コミュニティ概要 */}
-      <div className="w-full max-w-md mb-4">
+      <div className="w-full max-w-md mb-8">
+        <h2 className="font-bold text-xl mb-2">概要</h2>
         <p className="text-sm">{community.overview}</p>
       </div>
 

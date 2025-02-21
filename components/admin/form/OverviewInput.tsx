@@ -35,7 +35,7 @@ const OverviewInput = ({ overview, setOverview }: OverviewInputProps) => {
         value={text}
       />
       <div className="text-right text-sm text-gray-600 mt-1">
-        {text.length} / 140
+        {text.length} / 200
       </div>
     </div>
   );

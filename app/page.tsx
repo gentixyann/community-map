@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import UserMap from "../components/user/UserMap";
 import { fetchCommunityData } from "../firebase/user/firestore";
 import { CommunityData } from "@/model/CommunityModel";
+import HamburgerMenu from "@/components/user/HamburgerMenu";
 
 export default function Home() {
   const [communities, setCommunities] = useState<CommunityData[]>([]);
@@ -19,12 +20,13 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex flex-col items-center justify-center">
+    <main className="flex flex-col items-center justify-center relative">
       {/* Firestore データを UserMap に渡す */}
       <UserMap
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
         communities={communities}
       />
+      <HamburgerMenu />
     </main>
   );
 }

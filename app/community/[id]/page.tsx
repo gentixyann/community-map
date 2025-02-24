@@ -32,7 +32,7 @@ export default async function CommunityPage({ params }: CommunityPageProps) {
             alt={community.name}
             layout="fill"
             objectFit="cover"
-            className="rounded"
+            className="rounded-xl"
           />
         ) : (
           <Image

@@ -49,7 +49,7 @@ export default function HamburgerMenu() {
           }}
         >
           <Link href="/about_us" className="block py-2 hover:underline">
-            運営について
+            運営者について
           </Link>
           <Link href="/how_to_register" className="block py-2 hover:underline">
             コミュニティ登録するには？

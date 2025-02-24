@@ -1,6 +1,15 @@
+import SnsLinksComponent from "@/components/user/SnsLinks";
+import { SnsLinks } from "@/model/SnsLinksModel";
 import Image from "next/image";
 
 export default function AboutUs() {
+  // 静的に SNS リンクを定義
+  const snsLinksGentu: SnsLinks = {
+    instagram: "https://www.instagram.com/gentz122/",
+    note: "https://note.com/clean_godwit184",
+    x: "https://x.com/dreamergentz",
+  };
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4">
       <h1 className="text-3xl font-bold mb-4">運営者</h1>
@@ -18,6 +27,9 @@ export default function AboutUs() {
         <p className="text-sm">
           【夢を追い求める人達のコミュニティハウスを作りたい】新しい自分、夢を叶えるため日々奮闘中🔥友達、コミュニティ作りガチ勢🤝民泊・古民家・シェアハウス・ジビエ事業勉強中✏️フットワーク軽め全国どこでも行きます✈️筋トレ・サウナ・登山好き🏔
         </p>
+      </div>
+      <div className="w-full max-w-md mb-4">
+        <SnsLinksComponent snsLinks={snsLinksGentu} />
       </div>
     </main>
   );
